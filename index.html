@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Real Sound: The Winds of Regret</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500&family=Shippori+Mincho:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=36">
+</head>
+<body class="is-intro">
+
+<!-- Icons (SVG) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.2v13.6L19 12z" fill="currentColor"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M7.5 5h3v14h-3zM13.5 5h3v14h-3z" fill="currentColor"/></symbol>
+    <symbol id="i-prev-track" viewBox="0 0 24 24"><path d="M6.5 6v12" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M18 6.5v11L9.5 12z" fill="currentColor"/></symbol>
+    <symbol id="i-next-track" viewBox="0 0 24 24"><path d="M17.5 6v12" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M6 6.5v11l8.5-5.5z" fill="currentColor"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 12.5a7 7 0 1 0 2.1-5"/><path d="M6.6 3.8v3.8h3.8"/></g><text x="12.2" y="15.6" text-anchor="middle" font-size="6.8" font-family="Jost, sans-serif" fill="currentColor">10</text></symbol>
+    <symbol id="i-fwd" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4"><path d="M19 12.5a7 7 0 1 1-2.1-5"/><path d="M17.4 3.8v3.8h-3.8"/></g><text x="11.8" y="15.6" text-anchor="middle" font-size="6.8" font-family="Jost, sans-serif" fill="currentColor">10</text></symbol>
+    <symbol id="i-line-prev" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 5H6v14h3"/><path d="M17 8l-4 4 4 4"/></g></symbol>
+    <symbol id="i-line-next" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4"><path d="M15 5h3v14h-3"/><path d="M7 8l4 4-4 4"/></g></symbol>
+    <symbol id="i-vol" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 9.5h3l4.5-3.8v12.6L7 14.5H4z"/><path d="M15 9.5a3.5 3.5 0 0 1 0 5"/><path d="M17.5 7a7 7 0 0 1 0 10"/></g></symbol>
+    <symbol id="i-mute" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 9.5h3l4.5-3.8v12.6L7 14.5H4z"/><path d="M15.5 9.5l5 5M20.5 9.5l-5 5"/></g></symbol>
+    <symbol id="i-full" viewBox="0 0 24 24"><path d="M4.5 9V4.5H9M15 4.5h4.5V9M19.5 15v4.5H15M9 19.5H4.5V15" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.4"/></symbol>
+  </defs>
+</svg>
+
+<main id="stage">
+  <!-- ===== Background: sky video + title ===== -->
+  <div class="backdrop" aria-hidden="true">
+    <video class="bg-video" id="bgVideo" autoplay muted loop playsinline preload="auto" poster="img/bg-poster.jpg" disablepictureinpicture disableremoteplayback controlslist="nodownload">
+      <source src="media/bg.webm" type="video/webm">
+    </video>
+    <img class="bg-title" src="img/title.png" alt="">
+    <img class="bg-logo" src="img/realsound.png" alt="">
+    <img class="bg-tagline" src="img/tagline.png" alt="">
+  </div>
+
+  <!-- ===== Masthead ===== -->
+  <header class="masthead">
+    <button class="mast-link" id="btnChapters" aria-haspopup="dialog">Tracks</button>
+    <div class="mast-now">
+      <span class="mast-no">No.<b id="nowNo">01</b></span>
+      <span class="mast-title" id="nowTitle">Prologue</span>
+      <span class="mast-ja" id="nowJa" lang="ja">プロローグ</span>
+    </div>
+    <button class="mast-link" id="btnAbout">About</button>
+  </header>
+
+  <div class="dock">
+    <!-- ===== About the work (CD back cover) ===== -->
+    <section id="about" class="about" aria-label="About the work">
+      <i class="crop tl"></i><i class="crop tr"></i><i class="crop bl"></i><i class="crop br"></i>
+      <div class="about-spine" lang="ja" aria-hidden="true">リアルサウンド<span>◆</span>風のリグレット</div>
+
+      <div class="about-lead">
+        <p class="lead-ja" lang="ja">「心のひきだし」を開ける作品が、できました。</p>
+        <h1 class="lead-title">A work is born that will open <em>the drawers of your heart.</em></h1>
+        <div class="lead-actions">
+          <button class="start" id="btnStart">
+            <span class="start-disc"><svg><use href="#i-play"/></svg></span>
+            <span class="start-label">Listen<small id="startSub">Prologue · 44 min</small></span>
+          </button>
+          <button class="about-close" id="btnAboutClose" hidden><svg><use href="#i-close"/></svg>Back to listening</button>
+        </div>
+      </div>
+
+      <div class="about-body">
+        <nav class="tabs" role="tablist">
+          <button role="tab" aria-selected="true" data-tab="t-intro"><span>01</span>Introduction</button>
+          <button role="tab" aria-selected="false" data-tab="t-story"><span>02</span>Story</button>
+          <button role="tab" aria-selected="false" data-tab="t-cast"><span>03</span>Cast</button>
+          <button role="tab" aria-selected="false" data-tab="t-staff"><span>04</span>Staff</button>
+          <button role="tab" aria-selected="false" data-tab="t-info"><span>05</span>Details</button>
+        </nav>
+
+        <div class="tab-panels">
+          <div class="tab-panel prose" id="t-intro" role="tabpanel">
+            <p>In this drama, you become its protagonist, <b>Hiroshi</b>, and live a love story that unfolds around the memory of a first love.</p>
+            <p>Open the drawers of your heart and remember that summer’s first love, and the familiar scent of the wind. In your imagination, a drama that belongs to you alone takes shape.</p>
+            <p>A pure, bittersweet love story woven from nothing but high-quality sound — a gift from WARP to everyone.</p>
+          </div>
+
+          <div class="tab-panel prose" id="t-story" role="tabpanel" hidden>
+            <p>College student Hiroshi Nonomura is dreaming of his childhood. <mark>The girl at the next desk was to change schools when summer vacation ended, and the two of them promised to “elope” together — but she never came to their meeting place, the town clock tower.</mark> When the new term began, she was already gone.</p>
+            <p>Hiroshi is woken by his girlfriend, Izumi Sakurai. It is an important day: she is to introduce him to the head of personnel at her company. When he tells her about the dream, Izumi only smiles — “I’ve forgotten all about it.” For she is that same girl, his first love.</p>
+            <p><mark>But on their way to the interview, Izumi suddenly steps off the subway and disappears into the crowd. Days pass without a word. Izumi has vanished…</mark></p>
+          </div>
+
+          <div class="tab-panel" id="t-cast" role="tabpanel" hidden>
+            <ul class="cast">
+              <li><img src="img/cast-1.jpg" alt="Takashi Kashiwabara">
+                <div class="cast-id"><span class="role">Voice · Hiroshi</span><b>Takashi<br>Kashiwabara</b><span class="ja" lang="ja">柏原 崇</span></div>
+                <ul class="works"><li><i>Love Letter</i><span>film · 1995</span></li><li><i>Shōta no Sushi</i><span>TV · 1996</span></li><li><i>Itazura na Kiss</i><span>TV · 1996</span></li><li><i>Japan Academy Prize: Newcomer</i><span>award · 1996</span></li></ul></li>
+              <li><img src="img/cast-2.jpg" alt="Miho Kanno">
+                <div class="cast-id"><span class="role">Voice · Nana</span><b>Miho<br>Kanno</b><span class="ja" lang="ja">菅野 美穂</span></div>
+                <ul class="works"><li><i>Eko Eko Azarak</i><span>film · 1995</span></li><li><i>Hashiran ka!</i><span>TV · 1995</span></li><li><i>Iguana no Musume</i><span>TV · 1996</span></li><li><i>Ii Hito.</i><span>TV · 1997</span></li></ul></li>
+              <li><img src="img/cast-3.jpg" alt="Ryōko Shinohara">
+                <div class="cast-id"><span class="role">Voice · Izumi</span><b>Ryōko<br>Shinohara</b><span class="ja" lang="ja">篠原 涼子</span></div>
+                <ul class="works"><li><i>Koishisa to Setsunasa to Kokorozuyosa to</i><span>single · 1994</span></li><li><i>Kagayaku Kisetsu no Naka de</i><span>TV · 1995</span></li><li><i>Pure</i><span>TV · 1996</span></li><li><i>GIFT</i><span>TV · 1997</span></li></ul></li>
+            </ul>
+          </div>
+
+          <div class="tab-panel" id="t-staff" role="tabpanel" hidden>
+            <dl class="staff">
+              <div><dt><span class="role">Concept &amp; Direction</span>Kenji Eno <span class="ja" lang="ja">飯野賢治</span></dt>
+                <dd>“D” (Multimedia Grand Prix, MITI Minister’s Award); “Enemy Zero” (concept, direction, script)</dd></div>
+              <div><dt><span class="role">Screenplay</span>Yūji Sakamoto <span class="ja" lang="ja">坂元裕二</span></dt>
+                <dd>TV: “Tokyo Love Story”, “Dōkyūsei”, “Tsubasa o Kudasai”; film: “Yuri” (writer, director)</dd></div>
+              <div><dt><span class="role">Music</span>Keiichi Suzuki <span class="ja" lang="ja">鈴木慶一</span></dt>
+                <dd>Moonriders; The Beatniks (with Yukihiro Takahashi); composer of “MOTHER” 1 &amp; 2</dd></div>
+              <div><dt><span class="role">Programming</span>Naoya Satō <span class="ja" lang="ja">佐藤直哉</span></dt>
+                <dd>“Enemy Zero” (programming)</dd></div>
+              <div><dt><span class="role">Planning</span>Osamu Watanabe <span class="ja" lang="ja">渡辺修</span></dt>
+                <dd>“Mystic Ark” (planning, scenario)</dd></div>
+              <div><dt><span class="role">Ending Theme</span>Akiko Yano <span class="ja" lang="ja">矢野顕子</span></dt>
+                <dd>“Harusaki Kobeni”; best-of album “Hitotsudake”; her first band, Hamonzu</dd></div>
+            </dl>
+          </div>
+
+          <div class="tab-panel" id="t-info" role="tabpanel" hidden>
+            <div class="spec">
+              <img class="warp" src="img/warp.png" alt="WARP">
+              <dl>
+                <div><dt>Title</dt><dd>Real Sound: The Winds of Regret <span class="ja" lang="ja">リアルサウンド ～風のリグレット～</span></dd></div>
+                <div><dt>Genre</dt><dd>Interactive sound drama · 1 player</dd></div>
+                <div><dt>Original</dt><dd>Sega Saturn, 4 CD-ROMs · © 1997 WARP Inc.</dd></div>
+                <div><dt>Audiobook</dt><dd>2024 edition · From Yellow to Orange</dd></div>
+                <div><dt>Script translation</dt><dd>English translation of the original screenplay by Devin Malone and whowasphone404</dd></div>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Dialogue box ===== -->
+    <section id="dialog" class="dialog" hidden aria-live="polite">
+      <div class="dlg-who">
+        <span class="dlg-ja" id="dlgWhoJa" lang="ja"></span>
+        <span class="dlg-name" id="dlgWhoName"></span>
+        <span class="dlg-tag" id="dlgWhoTag"></span>
+      </div>
+      <div class="dlg-text" id="dlgText">
+        <p class="dlg-line" id="dlgLine"></p>
+        <p class="dlg-orig" id="dlgJa" lang="ja"></p>
+      </div>
+    </section>
+
+    <p id="noSubs" class="no-subs" hidden>Subtitles for this section are in progress</p>
+
+    <!-- ===== Player ===== -->
+    <footer class="player" id="player">
+      <button class="ctl ctl-play" id="btnPlay" title="Play / pause (Space)">
+        <svg class="ic-play"><use href="#i-play"/></svg><svg class="ic-pause"><use href="#i-pause"/></svg>
+      </button>
+      <div class="transport">
+        <button class="ctl" id="btnPrevTrack" title="Previous track"><svg><use href="#i-prev-track"/></svg></button>
+        <button class="ctl" id="btnBack" title="Back 10 s (←)"><svg><use href="#i-back"/></svg></button>
+        <button class="ctl" id="btnPrevCue" title="Previous line (,)"><svg><use href="#i-line-prev"/></svg></button>
+        <button class="ctl" id="btnNextCue" title="Next line (.)"><svg><use href="#i-line-next"/></svg></button>
+        <button class="ctl" id="btnFwd" title="Forward 10 s (→)"><svg><use href="#i-fwd"/></svg></button>
+        <button class="ctl" id="btnNextTrack" title="Next track"><svg><use href="#i-next-track"/></svg></button>
+      </div>
+      <div class="timeline">
+        <span class="time" id="tCur">0:00</span>
+        <div class="progress" id="progress">
+          <div class="progress-cues" id="progressCues"></div>
+          <div class="progress-fill" id="progressFill"></div>
+          <div class="progress-knob" id="progressKnob"></div>
+        </div>
+        <span class="time" id="tDur">0:00</span>
+      </div>
+      <div class="options">
+        <button class="opt" id="btnSpeed" title="Playback speed">1.0×</button>
+        <button class="opt" id="btnJa" title="Original Japanese text (J)" aria-pressed="false">原文</button>
+        <button class="opt" id="btnSize" title="Subtitle size">Aa</button>
+        <span class="vol">
+          <button class="ctl" id="btnMute" title="Volume (↑/↓)"><svg class="ic-vol"><use href="#i-vol"/></svg><svg class="ic-mute"><use href="#i-mute"/></svg></button>
+          <input type="range" id="volume" min="0" max="1" step="0.05" value="1" aria-label="Volume">
+        </span>
+        <button class="ctl" id="btnFull" title="Full screen (F)"><svg><use href="#i-full"/></svg></button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ===== Track list ===== -->
+  <aside id="chapters" class="drawer" hidden role="dialog" aria-label="Tracks">
+    <div class="drawer-head">
+      <div><h2>Tracks</h2><span class="ja" lang="ja">収録内容</span></div>
+      <button class="ctl" id="btnCloseChapters" aria-label="Close"><svg><use href="#i-close"/></svg></button>
+    </div>
+    <ol id="chapterList" class="tracklist"></ol>
+    <p class="drawer-foot">Real Sound: The Winds of Regret · Audiobook</p>
+  </aside>
+
+  <div id="review" class="review" hidden></div>
+</main>
+
+<audio id="audio" preload="metadata" controlslist="nodownload noplaybackrate" disableremoteplayback></audio>
+
+<script src="data/characters.js?v=36"></script>
+<script src="data/chapters.js?v=36"></script>
+<script src="js/player.js?v=36"></script>
+</body>
+</html>
